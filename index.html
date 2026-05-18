@@ -296,6 +296,17 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+  .footer-badges {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+  .footer-badges img {
+    height: 38px !important;
+    width: auto !important;
+  }
 </style>
 </head>
 <body>
@@ -346,12 +357,14 @@
         </div>
       </div>
       <div class="hero-image">
-        <script src="https://fast.wistia.com/embed/medias/htl85vr750.jsonp" async></script>
-        <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
-        <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;width:100%;border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 24px 64px -16px rgba(0,0,0,0.35);">
-          <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
-            <div class="wistia_embed wistia_async_htl85vr750 seo=true videoFoam=true" style="height:100%;position:relative;width:100%">
-              <div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/htl85vr750/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" decoding="async"></div>
+        <div style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 32px 80px -16px rgba(0,0,0,0.45);">
+          <script src="https://fast.wistia.com/embed/medias/htl85vr750.jsonp" async></script>
+          <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+          <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;width:100%;">
+            <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+              <div class="wistia_embed wistia_async_htl85vr750 seo=true videoFoam=true" style="height:100%;position:relative;width:100%">
+                <div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/htl85vr750/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" decoding="async"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -590,8 +603,8 @@
           <li><a href="https://dimagi.com/contact/" target="_blank" rel="noopener">Contact Us</a></li>
         </ul>
           <div class="footer-badges">
-            <a href="https://apps.apple.com/us/app/sureadhere-by-dimagi/id6444502883" target="_blank" rel="noopener"><img src="assets/images/badge-app-store.svg" alt="Download on the App Store"></a>
-            <a href="https://play.google.com/store/apps/details?id=com.dimagi.sureadhere&hl=en_US" target="_blank" rel="noopener"><img src="assets/images/badge-google-play.png" alt="Get it on Google Play"></a>
+            <a href="https://apps.apple.com/us/app/sureadhere-by-dimagi/id6444502883" target="_blank" rel="noopener"><img src="assets/images/badge-app-store.svg" alt="Download on the App Store" class="badge-apple"></a>
+            <a href="https://play.google.com/store/apps/details?id=com.dimagi.sureadhere&hl=en_US" target="_blank" rel="noopener"><img src="assets/images/badge-google-play.png" alt="Get it on Google Play" class="badge-google"></a>
           </div>
       </div>
       <div class="footer-col">
