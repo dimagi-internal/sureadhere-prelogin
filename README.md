@@ -64,5 +64,10 @@ Always view the page you changed plus one other page, to catch header/footer dri
 
 ## Deploy
 
-> **[TO BE CONFIRMED, Gillian to fill in.]**
-> How the files get from this folder to `https://dimagi.com/sureadhere/` (part of the dimagi.com static migration? a push to a branch? a manual upload to Kinsta?), and who has access to do it. This is the most important section for the SureAdhere team; complete it before handover.
+There is **no CI workflow in this repo**, so nothing auto-deploys on push yet. Confirm the exact mechanism and who has access before relying on it. The facts known at handover:
+
+- **Repo:** `github.com/dimagi-internal/sureadhere-prelogin` (this folder is the working copy). Commit and push every change so the team keeps history and a safe undo.
+- **Production target:** every page's `<link rel="canonical">` and `og:url` point to `https://dimagi.com/sureadhere/`, and `sitemap.xml` / `robots.txt` use that base. So the intended home is a path under the main dimagi.com static site (the WordPress to static migration), not a standalone domain.
+- **How the files actually ship today is unconfirmed.** Most likely one of: (a) folded into the dimagi.com static deploy as part of the migration, or (b) GitHub Pages "deploy from a branch" on the repo above. There is no GitHub Actions workflow.
+
+**Action for the SureAdhere team:** confirm (a) vs (b), wire up the deploy (a Pages workflow, or the migration pipeline), then replace this section with the confirmed steps and the list of who can publish. This is the most important section to finish; it is the one thing this handover could not verify from the code.
