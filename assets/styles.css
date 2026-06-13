@@ -167,15 +167,16 @@ nav.primary {
   font-weight: 600; font-size: 18px; letter-spacing: -0.02em;
   color: #fff;
 }
-.nav-wrap .logo-img { filter: brightness(0) invert(1); opacity: 0.95; transition: filter 220ms ease, opacity 220ms ease; }
+.nav-wrap .logo-img { filter: brightness(0) invert(1); opacity: 0.95; transition: filter 220ms ease, opacity 220ms ease, transform 220ms ease; }
 .nav-wrap .logo img,
-.nav-wrap .logo .logo-img { transition: filter 220ms ease, opacity 220ms ease; }
+.nav-wrap .logo .logo-img { transition: filter 220ms ease, opacity 220ms ease, transform 220ms ease; }
 .nav-wrap .logo:hover img,
 .nav-wrap .logo:focus-visible img,
 .nav-wrap .logo:hover .logo-img,
 .nav-wrap .logo:focus-visible .logo-img {
-  filter: brightness(0) saturate(100%) invert(10%) sepia(85%) saturate(3000%) hue-rotate(251deg) brightness(80%) contrast(118%) !important;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 12px rgba(255, 255, 255, 0.55)) !important;
   opacity: 1 !important;
+  transform: scale(1.04);
 }
 .logo-img {
   height: 36px; width: auto;
@@ -371,7 +372,7 @@ h1.hero-title {
 
 /* Dark hero variant - homepage indigo-saturated header */
 .hero.hero-dark {
-  background: #009090;
+  background: linear-gradient(160deg, #008C8E 0%, #009090 48%, #04A096 100%);
   color: var(--paper);
   padding: 96px 0 88px;
 }
@@ -795,6 +796,7 @@ h2.section-title {
   border: none; background: transparent; cursor: pointer;
   font-family: var(--sans); font-size: 1.05rem; font-weight: 500;
   color: var(--muted); transition: all 0.2s ease;
+  position: relative; overflow: hidden;
 }
 .cap-tab:hover { background: var(--paper-2); color: var(--ink); }
 .cap-tab.active { background: var(--indigo); color: #fff; box-shadow: 0 2px 10px rgba(24,15,96,0.22); }
@@ -803,10 +805,27 @@ h2.section-title {
   letter-spacing: 0.1em; opacity: 0.5;
 }
 .cap-tab.active .cap-tab-num { opacity: 0.85; }
+/* Auto-rotate cue: a progress bar fills under the active tab while the set is
+   cycling (mirrors the CommCare solutions rotator). The 5s fill is kept in sync
+   with the 5000ms JS interval; .cap-rotating is toggled by the page script. */
+.cap-tab::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  height: 3px; width: 0; border-radius: 999px;
+  background: rgba(255,255,255,0.7);
+  pointer-events: none;
+}
+.cap-rotating .cap-tab.active::after { animation: cap-fill 5s linear forwards; }
+@keyframes cap-fill { from { width: 0; } to { width: 100%; } }
 .cap-panel { display: none; }
 .cap-panel.active {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 80px; align-items: center; padding-top: 64px;
+  animation: cap-panel-in 0.45s ease;
+}
+@keyframes cap-panel-in { from { opacity: 0.35; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .cap-rotating .cap-tab.active::after { animation: none; }
+  .cap-panel.active { animation: none; }
 }
 .cap-panel-img { order: -1; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px; }
 .cap-panel-img img { max-width: 100%; height: auto; object-fit: contain; display: block; }
@@ -6524,14 +6543,29 @@ footer {
 .ct-compliance-head p { color: var(--muted); font-size: 0.95rem; max-width: 640px; margin: 0 auto; line-height: 1.7; }
 .ct-compliance-items { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
 .ct-compliance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   font-family: var(--mono);
   font-size: 0.72rem; font-weight: 600;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--indigo-deep);
   background: var(--paper-2);
   border: 1px solid var(--indigo-soft);
-  border-radius: var(--radius-sm);
-  padding: 14px 28px;
+  border-radius: 999px;
+  padding: 13px 26px;
+  box-shadow: 0 1px 2px rgba(13,31,31,0.04);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+.ct-compliance-badge:hover {
+  border-color: var(--indigo);
+  box-shadow: 0 6px 18px -8px rgba(0,144,144,0.32);
+  transform: translateY(-1px);
+}
+.ct-compliance-badge svg {
+  width: 14px; height: 14px;
+  color: var(--indigo);
+  flex-shrink: 0;
 }
 
 /* ---- Partner stories (dark) ---- */

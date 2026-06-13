@@ -254,6 +254,9 @@
     flex-wrap: wrap;
   }
   .compliance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
     font-family: var(--mono);
     font-size: 0.72rem;
     font-weight: 600;
@@ -262,8 +265,20 @@
     color: var(--indigo-deep);
     background: var(--paper-2);
     border: 1px solid var(--indigo-soft);
-    border-radius: var(--radius-sm);
-    padding: 10px 20px;
+    border-radius: 999px;
+    padding: 11px 20px;
+    box-shadow: 0 1px 2px rgba(13,31,31,0.04);
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+  .compliance-badge:hover {
+    border-color: var(--indigo);
+    box-shadow: 0 6px 18px -8px rgba(0,144,144,0.32);
+    transform: translateY(-1px);
+  }
+  .compliance-badge svg {
+    width: 14px; height: 14px;
+    color: var(--indigo);
+    flex-shrink: 0;
   }
 
   /* ── Stats band: light teal variant (mirrors CommCare pattern) ── */
@@ -335,17 +350,113 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-  .footer-badges {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 12px !important;
-    flex-wrap: wrap !important;
+
+  /* ── Closing CTA band (deep, bookends the teal hero) ── */
+  .cta-final {
+    background: var(--grad-deep);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
   }
-  .footer-badges img {
-    height: 48px !important;
-    width: auto !important;
+  .cta-final::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(58% 90% at 100% 0%, rgba(0,144,144,0.45), transparent 60%),
+      radial-gradient(48% 80% at 0% 100%, rgba(80,196,255,0.16), transparent 65%);
+    pointer-events: none;
   }
+  .cta-final .container { position: relative; z-index: 1; }
+  .cta-final .section-title { color: var(--paper); }
+  .cta-final .section-title em {
+    background: linear-gradient(90deg, #6ECAC5 0%, #A5DFDB 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
+  .cta-final-sub {
+    color: rgba(255,255,255,0.74);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin: 24px 0 40px;
+  }
+  .cta-final-actions {
+    display: flex; gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── Hero entrance (gentle rise; opacity never drops to 0 so a frozen
+        frame still shows the text) ── */
+  @keyframes sa-hero-rise {
+    from { opacity: 0.001; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero.hero-dark .eyebrow,
+  .hero.hero-dark .hero-title,
+  .hero.hero-dark .hero-sub,
+  .hero.hero-dark .hero-ctas {
+    animation: sa-hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hero.hero-dark .hero-title       { animation-delay: 0.07s; }
+  .hero.hero-dark .hero-sub:nth-of-type(1) { animation-delay: 0.15s; }
+  .hero.hero-dark .hero-sub:nth-of-type(2) { animation-delay: 0.21s; }
+  .hero.hero-dark .hero-ctas        { animation-delay: 0.29s; }
+  .hero.hero-dark .hero-image       { animation: sa-hero-rise 0.9s ease 0.18s both; }
+
+  /* ── Stats count-up: tabular figures keep width steady while counting ── */
+  .hero-stats--on-teal .hero-stats-num { font-variant-numeric: tabular-nums; }
+
+  /* ── Reduced-motion: show everything statically ── */
+  @media (prefers-reduced-motion: reduce) {
+    .sa-logo-track { animation: none; }
+    .hero.hero-dark .eyebrow,
+    .hero.hero-dark .hero-title,
+    .hero.hero-dark .hero-sub,
+    .hero.hero-dark .hero-ctas,
+    .hero.hero-dark .hero-image { animation: none; opacity: 1; transform: none; }
+  }
+
+  /* ── Homepage partner stories (reuses .partner-stories-dark; adds an
+        on-dark lede, whole-card links, and a text link) ── */
+  .partner-stories-dark .ps-lede {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.7);
+    max-width: 640px;
+    margin: 0;
+  }
+  .partner-stories-dark a.story-card {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+  }
+  .partner-stories-dark a.story-card:hover {
+    border-color: rgba(110,202,197,0.55);
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-3px);
+  }
+  .partner-stories-dark .story-card h4 { transition: color 180ms ease; }
+  .partner-stories-dark a.story-card:hover h4 { color: #A5DFDB; }
+  .partner-stories-dark .story-card-stats { margin-top: auto; }
+  .partner-stories-dark .story-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6ECAC5;
+    margin-top: 28px;
+  }
+  .partner-stories-dark .story-link::after { content: "→"; transition: transform 150ms ease; }
+  .partner-stories-dark .story-link:hover { color: #A5DFDB; }
+  .partner-stories-dark .story-link:hover::after { transform: translateX(3px); }
 </style>
 </head>
 <body>
@@ -356,7 +467,7 @@
   <div class="container">
     <nav class="primary">
       <a class="logo" href="index.html">
-        <img src="assets/images/sureadhere-logo-full-color.png" alt="SureAdhere by Dimagi" style="height:38px;width:auto;filter:brightness(0) invert(1);opacity:0.95;">
+        <img src="assets/images/sureadhere-logo-full-color.png" alt="SureAdhere by Dimagi" style="height:38px;width:auto;filter:brightness(0) invert(1);opacity:0.95;" width="520" height="151">
       </a>
       <div class="nav-links">
         <a href="clinical-trials/index.html">Clinical Trials</a>
@@ -388,7 +499,7 @@
           Provide the gold standard of care, Directly Observed Therapy (DOT), without the burden of in-person visits.
         </p>
         <p class="hero-sub">
-          SureAdhere is a patient engagement app that lets patients take their medication over video when it works for them, saving providers resources while ensuring adherence to complex regimens and improving health outcomes.
+          Patients take their medication over video on their own schedule, so providers save time and adherence to complex regimens improves.
         </p>
         <div class="hero-ctas">
           <a class="btn btn-on-dark btn-arrow" href="contact/">Schedule a demo</a>
@@ -441,40 +552,40 @@
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">WHO WE SERVE</span>
-      <h2 class="section-title">Who SureAdhere <em>Serves.</em></h2>
-      <p class="section-lede">Providers across the public health, behavioral health, and clinical research spectrum can create a customized treatment experience within SureAdhere and address important nuances in each care delivery approach. SureAdhere is designed to meet the unique demands of clinical practice and research where outpatient support is critical for treatment adherence and patient outcomes.</p>
+      <h2 class="section-title">Built for the settings where <em>adherence matters most</em></h2>
+      <p class="section-lede">From public health and behavioral health to clinical research, providers tailor SureAdhere to each program's needs, wherever outpatient support is critical to adherence and outcomes.</p>
     </div>
 
     <div class="serve-grid">
       <div class="serve-card">
         <div style="overflow:hidden;border-radius:var(--radius-lg) var(--radius-lg) 0 0;">
-          <img src="assets/images/hero-public-health-live.jpg" alt="Public Health" style="width:100%;height:200px;object-fit:cover;" loading="lazy">
+          <img src="assets/images/hero-public-health-live.webp" alt="Public Health" style="width:100%;height:200px;object-fit:cover;" loading="lazy" width="1400" height="933">
         </div>
         <div class="serve-card-body">
           <h3>Public Health</h3>
-          <p>Ensure treatment adherence and streamline support for TB and other infectious disease treatment with CDC-validated video-based Directly Observed Therapy.</p>
+          <p>CDC-validated video Directly Observed Therapy for TB and other infectious diseases.</p>
           <a class="btn btn-ghost btn-arrow" href="public-health/index.html">Learn more</a>
         </div>
       </div>
 
       <div class="serve-card">
         <div style="overflow:hidden;border-radius:var(--radius-lg) var(--radius-lg) 0 0;">
-          <img src="assets/images/hero-behavioral-health-live.jpg" alt="Behavioral Health" style="width:100%;height:200px;object-fit:cover;" loading="lazy">
+          <img src="assets/images/hero-behavioral-health-live.webp" alt="Behavioral Health" style="width:100%;height:200px;object-fit:cover;" loading="lazy" width="1000" height="667">
         </div>
         <div class="serve-card-body">
           <h3>Behavioral Health</h3>
-          <p>Support patients seeking opioid use disorder treatment through virtual Medication-Assisted Treatment, offering flexibility, convenience, and continuous feedback with a provider.</p>
+          <p>Virtual Medication-Assisted Treatment for opioid use disorder, with flexible, continuous provider support.</p>
           <a class="btn btn-ghost btn-arrow" href="behavioral-health/index.html">Learn more</a>
         </div>
       </div>
 
       <div class="serve-card">
         <div style="overflow:hidden;border-radius:var(--radius-lg) var(--radius-lg) 0 0;">
-          <img src="assets/images/hero-clinical-trials-live.png" alt="Clinical Trials" style="width:100%;height:200px;object-fit:cover;" loading="lazy">
+          <img src="assets/images/hero-clinical-trials-live.webp" alt="Clinical Trials" style="width:100%;height:200px;object-fit:cover;" loading="lazy" width="1000" height="600">
         </div>
         <div class="serve-card-body">
           <h3>Clinical Trials</h3>
-          <p>High adherence and data-driven regimen decisions for clinical trials even in communities with limited connectivity with participant engagement and support platform.</p>
+          <p>High adherence and data-driven regimen decisions, even in communities with limited connectivity.</p>
           <a class="btn btn-ghost btn-arrow" href="clinical-trials/index.html">Learn more</a>
         </div>
       </div>
@@ -488,28 +599,28 @@
   <div class="sa-logo-marquee">
     <div class="sa-logo-track">
       <div class="sa-logo-set" aria-label="Organizations using SureAdhere">
-        <img class="sa-logo-img" src="assets/images/logo-nhs-uclh.png" alt="NHS University College London Hospitals">
-        <img class="sa-logo-img" src="assets/images/logo-williamson-county-hd.png" alt="Williamson County and Cities Health District">
-        <img class="sa-logo-img" src="assets/images/logo-sf-dph-hd.png" alt="San Francisco Department of Public Health">
-        <img class="sa-logo-img" src="assets/images/logo-world-vision.png" alt="World Vision">
-        <img class="sa-logo-img" src="assets/images/logo-nyc-health.png" alt="NYC Health">
-        <img class="sa-logo-img" src="assets/images/logo-denver-health.png" alt="Denver Health">
-        <img class="sa-logo-img" src="assets/images/logo-vermont-care.png" alt="Vermont Care Partners">
-        <img class="sa-logo-img" src="assets/images/logo-gates-mri-2.png" alt="Gates MRI">
-        <img class="sa-logo-img" src="assets/images/logo-pan-tb.jpg" alt="Pan-TB">
-        <img class="sa-logo-img" src="assets/images/logo-dermata-new.png" alt="Dermata Therapeutics">
+        <img class="sa-logo-img" src="assets/images/logo-nhs-uclh.png" alt="NHS University College London Hospitals" width="266" height="123" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-williamson-county-hd.png" alt="Williamson County and Cities Health District" width="906" height="953" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-sf-dph-hd.webp" alt="San Francisco Department of Public Health" width="1876" height="601" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-world-vision.png" alt="World Vision" width="260" height="62" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-nyc-health.png" alt="NYC Health" width="374" height="77" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-denver-health.png" alt="Denver Health" width="345" height="67" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-vermont-care.png" alt="Vermont Care Partners" width="239" height="91" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-gates-mri-2.png" alt="Gates MRI" width="480" height="218" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-pan-tb.jpg" alt="Pan-TB" width="1234" height="442" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-dermata-new.png" alt="Dermata Therapeutics" width="600" height="91" loading="lazy">
       </div>
       <div class="sa-logo-set" aria-hidden="true">
-        <img class="sa-logo-img" src="assets/images/logo-nhs-uclh.png" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-williamson-county-hd.png" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-sf-dph-hd.png" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-world-vision.png" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-nyc-health.png" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-denver-health.png" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-vermont-care.png" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-gates-mri-2.png" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-pan-tb.jpg" alt="">
-        <img class="sa-logo-img" src="assets/images/logo-dermata-new.png" alt="">
+        <img class="sa-logo-img" src="assets/images/logo-nhs-uclh.png" alt="" width="266" height="123" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-williamson-county-hd.png" alt="" width="906" height="953" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-sf-dph-hd.webp" alt="" width="1876" height="601" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-world-vision.png" alt="" width="260" height="62" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-nyc-health.png" alt="" width="374" height="77" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-denver-health.png" alt="" width="345" height="67" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-vermont-care.png" alt="" width="239" height="91" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-gates-mri-2.png" alt="" width="480" height="218" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-pan-tb.jpg" alt="" width="1234" height="442" loading="lazy">
+        <img class="sa-logo-img" src="assets/images/logo-dermata-new.png" alt="" width="600" height="91" loading="lazy">
       </div>
     </div>
   </div>
@@ -521,7 +632,7 @@
     <div class="section-head">
       <span class="eyebrow">THE PLATFORM</span>
       <h2 class="section-title">Discover the <em>SureAdhere Platform</em></h2>
-      <p class="section-lede">A complete platform built for both patients and providers, combining an easy-to-use mobile app with a powerful provider web application for real-time visibility and control.</p>
+      <p class="section-lede">One platform for patients and providers: a simple mobile app plus a powerful web app for real-time visibility and control.</p>
       <div style="margin-top:24px;">
         <a class="btn btn-indigo btn-arrow" href="contact/">Schedule a demo</a>
       </div>
@@ -530,35 +641,109 @@
     <div class="platform-split" style="margin-top:48px;">
       <div class="platform-split-panel">
         <div class="platform-screenshot" style="height:300px;display:flex;align-items:center;justify-content:center;gap:12px;padding:24px;background:#ffffff;">
-          <img src="assets/images/bh-home.jpg" alt="SureAdhere mobile app welcome screen" loading="lazy" style="height:252px;width:auto;object-fit:contain;">
-          <img src="assets/images/ct-pills.jpg" alt="SureAdhere mobile app dose capture" loading="lazy" style="height:252px;width:auto;object-fit:contain;">
-          <img src="assets/images/ct-calendar.jpg" alt="SureAdhere mobile app treatment calendar" loading="lazy" style="height:252px;width:auto;object-fit:contain;">
+          <img src="assets/images/bh-home.jpg" alt="SureAdhere mobile app welcome screen" loading="lazy" style="height:252px;width:auto;object-fit:contain;" width="369" height="800">
+          <img src="assets/images/ct-pills.jpg" alt="SureAdhere mobile app dose capture" loading="lazy" style="height:252px;width:auto;object-fit:contain;" width="369" height="800">
+          <img src="assets/images/ct-calendar.jpg" alt="SureAdhere mobile app treatment calendar" loading="lazy" style="height:252px;width:auto;object-fit:contain;" width="369" height="800">
         </div>
         <span class="eyebrow muted">MOBILE APP</span>
         <h3>Easy Video Directly Observed Therapy for Patients</h3>
-        <p>Empower patients to actively participate in their care journey and track progress.</p>
+        <p>Help patients take part in their care and track their progress.</p>
         <ul class="feature-list">
-          <li><div class="fl-inner"><span class="fl-label">Simple &amp; Accessible Experience</span><span class="fl-desc">Easy to use for patients of varying technical literacy levels, with offline functionality for uninterrupted support.</span></div></li>
-          <li><div class="fl-inner"><span class="fl-label">Personalized Treatment Tracking</span><span class="fl-desc">Patients get visibility into their journey through an intuitive calendar view and dose history.</span></div></li>
-          <li><div class="fl-inner"><span class="fl-label">Direct Access to Care Teams</span><span class="fl-desc">Secure in-app messaging and live video visits keep patients connected with providers.</span></div></li>
-          <li><div class="fl-inner"><span class="fl-label">Designed to Support Adherence</span><span class="fl-desc">Reminders, treatment guidance, and engagement tools that help patients stay on track.</span></div></li>
+          <li><div class="fl-inner"><span class="fl-label">Simple &amp; Accessible Experience</span><span class="fl-desc">Works for any technical skill level, with offline support built in.</span></div></li>
+          <li><div class="fl-inner"><span class="fl-label">Personalized Treatment Tracking</span><span class="fl-desc">An intuitive calendar and dose history keep patients oriented.</span></div></li>
+          <li><div class="fl-inner"><span class="fl-label">Direct Access to Care Teams</span><span class="fl-desc">Secure messaging and live video keep patients connected to their care team.</span></div></li>
+          <li><div class="fl-inner"><span class="fl-label">Designed to Support Adherence</span><span class="fl-desc">Reminders and guidance that help patients stay on track.</span></div></li>
         </ul>
       </div>
 
       <div class="platform-split-panel">
         <div class="platform-screenshot" style="height:300px;overflow:hidden;background:#ffffff;">
-          <img src="assets/images/platform-computer.png" alt="SureAdhere Provider Web Application dashboard" loading="lazy" style="width:135%;max-width:none;height:100%;object-fit:cover;object-position:left top;">
+          <img src="assets/images/platform-computer.png" alt="SureAdhere Provider Web Application dashboard" loading="lazy" style="width:135%;max-width:none;height:100%;object-fit:cover;object-position:left top;" width="980" height="619">
         </div>
         <span class="eyebrow muted">WEB PLATFORM</span>
         <h3>Streamline Complex Treatment Support for Providers</h3>
-        <p>Easily manage patients with complex regimens, reviewing dosing, triaging cases, and engaging for follow-up.</p>
+        <p>Manage complex regimens: review dosing, triage cases, and follow up.</p>
         <ul class="feature-list">
-          <li><div class="fl-inner"><span class="fl-label">Real-Time Adherence Analytics</span><span class="fl-desc">Monitor adherence across patient populations with real-time insights that support rapid triage and intervention.</span></div></li>
-          <li><div class="fl-inner"><span class="fl-label">Complex Regimen Management</span><span class="fl-desc">Configure dose reminders, track dosing histories, and capture side effects for complex treatment protocols.</span></div></li>
-          <li><div class="fl-inner"><span class="fl-label">Virtual Engagement &amp; Communication</span><span class="fl-desc">Connect via secure messaging, SMS, and integrated live video visits for timely follow-up.</span></div></li>
-          <li><div class="fl-inner"><span class="fl-label">Flexible Integrations &amp; Adherence Tools</span><span class="fl-desc">Support video DOT, in-person DOT, MERM devices, and digital pill caps, with EHR and device integrations.</span></div></li>
+          <li><div class="fl-inner"><span class="fl-label">Real-Time Adherence Analytics</span><span class="fl-desc">Real-time adherence insights across your population for rapid triage.</span></div></li>
+          <li><div class="fl-inner"><span class="fl-label">Complex Regimen Management</span><span class="fl-desc">Configure reminders, track dosing, and capture side effects for complex protocols.</span></div></li>
+          <li><div class="fl-inner"><span class="fl-label">Virtual Engagement &amp; Communication</span><span class="fl-desc">Reach patients by secure messaging, SMS, and live video.</span></div></li>
+          <li><div class="fl-inner"><span class="fl-label">Flexible Integrations &amp; Adherence Tools</span><span class="fl-desc">Video DOT, in-person DOT, MERM devices, and digital pill caps, with EHR integrations.</span></div></li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── PARTNER STORIES ───── -->
+<section class="partner-stories-dark" id="stories">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">PARTNER STORIES</span>
+      <h2 class="section-title">Trusted across every <em>care setting</em></h2>
+      <p class="ps-lede">From global TB trials to MAT clinics and county health departments, teams rely on SureAdhere to keep patients on treatment, with the outcomes to show for it.</p>
+    </div>
+
+    <!-- Featured: Gates MRI & PAN-TB Consortium -->
+    <div class="story-featured">
+      <div class="story-featured-copy">
+        <div class="story-label">PARTNER STORY &nbsp;·&nbsp; OCTOBER 2024</div>
+        <h3 style="color:#fff;">Gates MRI &amp; PAN-TB Consortium: <em>Phase 2b/c TB treatment-shortening trial.</em></h3>
+        <p>Gates MRI selected SureAdhere as the central adherence platform for the PAN-TB TBDO6 study, evaluating two novel regimens across 11 sites in South Africa and the Philippines. Exceptionally high adherence allowed early go/no-go decisions without adherence as a confounding factor.</p>
+        <div class="story-stats">
+          <div>
+            <div class="story-stat-num">99<span>%</span></div>
+            <div class="story-stat-lbl">Treatment Adherence</div>
+          </div>
+          <div>
+            <div class="story-stat-num">97<span>%</span></div>
+            <div class="story-stat-lbl">Participants Felt Supported</div>
+          </div>
+          <div>
+            <div class="story-stat-num">11</div>
+            <div class="story-stat-lbl">Trial Sites</div>
+          </div>
+        </div>
+        <a class="story-link" href="clinical-trials/index.html">Explore clinical trials</a>
+      </div>
+      <div class="story-featured-visual" style="align-items:flex-start;justify-content:center;min-height:220px;">
+        <img src="assets/images/logo-gates-mri-2.png" alt="Gates Medical Research Institute" loading="lazy" style="width:100%;max-width:300px;height:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9;" width="480" height="218">
+        <p class="story-quote-text">"Why can't we use SureAdhere in all of our clinical trials?"</p>
+        <div class="story-quote-attr">Treatment Support Worker, South African Trial Site</div>
+      </div>
+    </div>
+
+    <!-- Secondary: Public Health + Behavioral Health -->
+    <div class="story-secondary-grid">
+      <a class="story-card" href="public-health/index.html">
+        <div class="story-card-tag">PUBLIC HEALTH &nbsp;·&nbsp; OCT 2018</div>
+        <h4>5 California health districts cut TB treatment costs by a third</h4>
+        <p>San Francisco DPH and four other county departments adopted video DOT to monitor TB treatment, reaching higher adherence than in-person DOT at a fraction of the cost.</p>
+        <div class="story-card-stats">
+          <div>
+            <div class="story-card-stat-num">93<span>%</span></div>
+            <div class="story-card-stat-lbl">VDOT Adherence</div>
+          </div>
+          <div>
+            <div class="story-card-stat-num">32<span>%</span></div>
+            <div class="story-card-stat-lbl">Lower Cost vs DOT</div>
+          </div>
+        </div>
+      </a>
+      <a class="story-card" href="behavioral-health/index.html">
+        <div class="story-card-tag">BEHAVIORAL HEALTH &nbsp;·&nbsp; 2022</div>
+        <h4>Vermont's virtual MAT program nearly doubled retention</h4>
+        <p>The Howard Center paired a secure medication dispenser with SureAdhere's VDOT, transforming one-year retention for patients accessing Medication-Assisted Treatment.</p>
+        <div class="story-card-stats">
+          <div>
+            <div class="story-card-stat-num">98<span>%</span></div>
+            <div class="story-card-stat-lbl">1-Year Retention</div>
+          </div>
+          <div>
+            <div class="story-card-stat-num">$72</div>
+            <div class="story-card-stat-lbl">Weekly Travel Saved</div>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -571,11 +756,11 @@
       <p style="color:var(--muted);font-size:0.9rem;margin:0;">Prioritizing patient safety, compliance, and privacy across every program we support.</p>
     </div>
     <div class="compliance-items">
-      <span class="compliance-badge">HIPAA Compliant</span>
-      <span class="compliance-badge">GDPR Compliant</span>
-      <span class="compliance-badge">21 CFR Part 11</span>
-      <span class="compliance-badge">SOC 2 Certified</span>
-      <span class="compliance-badge">Support SLAs</span>
+      <span class="compliance-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V5l7-3z"/><path d="M9 12l2 2 4-4"/></svg>HIPAA Compliant</span>
+      <span class="compliance-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V5l7-3z"/><path d="M9 12l2 2 4-4"/></svg>GDPR Compliant</span>
+      <span class="compliance-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V5l7-3z"/><path d="M9 12l2 2 4-4"/></svg>21 CFR Part 11</span>
+      <span class="compliance-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V5l7-3z"/><path d="M9 12l2 2 4-4"/></svg>SOC 2 Certified</span>
+      <span class="compliance-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V5l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Support SLAs</span>
     </div>
   </div>
 </div>
@@ -587,26 +772,27 @@
       <div>
         <span class="eyebrow">THE EVIDENCE</span>
         <h2 class="section-title">Designed for patients. <em>Built on evidence.</em></h2>
-        <p style="color:var(--muted);font-size:1rem;line-height:1.75;margin:24px 0 32px;">SureAdhere goes beyond conventional telemedicine, empowering providers to address individual patient needs while drawing on over a decade of rigorous academic and public health research, including 27 peer-reviewed publications.</p>
+        <p style="color:var(--muted);font-size:1rem;line-height:1.75;margin:24px 0 32px;">More than telemedicine. Every feature draws on over a decade of academic and public health research, including 27 peer-reviewed publications.</p>
         <a class="btn btn-ghost btn-arrow" href="publications/index.html">View the Evidence</a>
       </div>
       <div style="border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line);">
-        <img src="assets/images/evidence-base-hero.png" alt="SureAdhere Evidence" style="width:100%;height:auto;display:block;">
+        <img src="assets/images/evidence-base-hero.webp" alt="SureAdhere Evidence" style="width:100%;height:auto;display:block;" width="1920" height="1242" loading="lazy">
       </div>
     </div>
   </div>
 </section>
 
 <!-- ───── CTA ───── -->
-<section class="section" style="background:var(--indigo-soft);text-align:center;">
-  <div class="container" style="max-width:700px;">
-    <span class="eyebrow">GET STARTED</span>
-    <h2 class="section-title" style="margin-bottom:24px;">Connect With Us To Learn More</h2>
-    <p style="color:var(--muted);font-size:1.05rem;margin-bottom:40px;line-height:1.7;">
+<section class="section cta-final">
+  <div class="container" style="max-width:720px;">
+    <span class="eyebrow on-dark">GET STARTED</span>
+    <h2 class="section-title">Connect with us to <em>learn more</em></h2>
+    <p class="cta-final-sub">
       Have questions about our platform features, demos, or pricing? Our team is here to help.
     </p>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <a class="btn btn-indigo btn-arrow" href="contact/">Schedule a demo</a>
+    <div class="cta-final-actions">
+      <a class="btn btn-on-dark btn-arrow" href="contact/">Schedule a demo</a>
+      <a class="btn btn-ghost-on-dark btn-arrow" href="https://secure.sureadhere.com/" target="_blank" rel="noopener">Sign In</a>
     </div>
   </div>
 </section>
@@ -617,12 +803,12 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo" style="gap:10px;">
-          <img src="assets/images/sureadhere-logo-full-color.png" alt="SureAdhere by Dimagi" style="height:30px;width:auto;filter:brightness(0) invert(1);opacity:0.85;">
+          <img src="assets/images/sureadhere-logo-full-color.png" alt="SureAdhere by Dimagi" style="height:30px;width:auto;filter:brightness(0) invert(1);opacity:0.85;" width="520" height="151" loading="lazy">
         </div>
         <p>Patient-centered adherence technology.</p>
         <div class="footer-badges">
-          <a href="https://apps.apple.com/us/app/sureadhere-by-dimagi/id6444502883" target="_blank" rel="noopener"><img src="assets/images/badge-app-store.svg" alt="Download on the App Store" class="badge-apple"></a>
-          <a href="https://play.google.com/store/apps/details?id=com.dimagi.sureadhere&hl=en_US" target="_blank" rel="noopener"><img src="assets/images/badge-google-play.png" alt="Get it on Google Play" class="badge-google"></a>
+          <a href="https://apps.apple.com/us/app/sureadhere-by-dimagi/id6444502883" target="_blank" rel="noopener"><img src="assets/images/badge-app-store.svg" alt="Download on the App Store" class="badge-apple" width="120" height="40" loading="lazy"></a>
+          <a href="https://play.google.com/store/apps/details?id=com.dimagi.sureadhere&hl=en_US" target="_blank" rel="noopener"><img src="assets/images/badge-google-play.png" alt="Get it on Google Play" class="badge-google" width="646" height="250" loading="lazy"></a>
         </div>
       </div>
       <div class="footer-col">
@@ -685,6 +871,52 @@
       document.querySelector('.nav-cta').classList.remove('is-open');
     });
   });
+})();
+
+/* Count-up on the stats band (respects reduced-motion; degrades gracefully) */
+(function () {
+  var band = document.querySelector('.hero-stats--on-teal');
+  if (!band) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window) || !window.requestAnimationFrame) return;
+
+  var targets = [];
+  band.querySelectorAll('.hero-stats-num').forEach(function (el) {
+    var t = el.firstChild; // leading text node holds the number
+    if (!t || t.nodeType !== 3) return;
+    var target = parseInt(t.textContent, 10);
+    if (isNaN(target)) return;
+    targets.push({ node: t, target: target });
+    t.textContent = '0';
+  });
+  if (!targets.length) return;
+
+  var done = false;
+  function finish() {
+    done = true;
+    targets.forEach(function (it) { it.node.textContent = it.target.toString(); });
+  }
+  function run() {
+    var dur = 1200, start = null;
+    function step(ts) {
+      if (done) return;
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      targets.forEach(function (it) { it.node.textContent = Math.round(eased * it.target).toString(); });
+      if (p < 1) requestAnimationFrame(step);
+      else finish();
+    }
+    requestAnimationFrame(step);
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting && !done) { run(); io.disconnect(); } });
+  }, { threshold: 0.4 });
+  io.observe(band);
+
+  /* Failsafe: never leave the numbers stuck at 0 if rAF/IO are throttled */
+  setTimeout(function () { if (!done) finish(); }, 2600);
 })();
 </script>
 </body>
