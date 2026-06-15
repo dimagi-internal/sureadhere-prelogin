@@ -1,8 +1,19 @@
 # SureAdhere pre-login website
 
-The public marketing site for **SureAdhere by Dimagi**, served at `https://dimagi.com/sureadhere/`. It is a static HTML site: no framework, no build step, no database. You edit HTML and CSS files directly, or have Claude Code do it using the skills below.
+The public marketing site for **SureAdhere by Dimagi**. It is a static HTML site: no framework, no build step, no database. You edit HTML and CSS files directly, or have Claude Code do it using the skills below.
 
 This README is the orientation guide. The day-to-day editing rules live in `CLAUDE.md`, which Claude Code loads automatically.
+
+## Status: staging, awaiting handover
+
+This repo is the staging copy. Production hosting, repo home, and deploy pipeline are still to be decided by the SureAdhere team. Open items they need to resolve before launch:
+
+1. **Repo home.** This copy lives at `github.com/dimagi-internal/sureadhere-prelogin`. The team may move it into a SureAdhere-owned org or fold it into an existing main repo.
+2. **Production URL.** Working assumption is `sureadhere.com` (already owned; today it 301-redirects to `dimagi.com/sureadhere/`). Confirm and lock in.
+3. **Deploy pipeline.** No CI workflow exists in this repo. The team picks the host (GitHub Pages, Vercel/Netlify, the dimagi.com static migration pipeline, etc.) and wires push-to-main auto-deploy.
+4. **Cutover housekeeping.** At launch, three things need to happen together: (a) flip every `<link rel="canonical">`, `og:url`, JSON-LD `@id`/`url`, `sitemap.xml`, and `robots.txt` from `dimagi.com/sureadhere/` to the new host (the HTML metadata still uses the old URLs intentionally; do not flip until you cut over); (b) add WordPress 301s from `dimagi.com/sureadhere/*` to the new host; (c) update the App Store and Play Store privacy-policy URL fields to wherever `/privacy-policy/` ends up.
+5. **HubSpot contact form.** Embed is wired (portalId `503070`, formId `e20b08b5-de23-42b1-9040-b37acff28623`) but the team should confirm submissions land in a watched inbox.
+6. **Legal sign-off.** The two privacy policies (English and Mandarin) carry SureAdhere-specific language. Get Dimagi legal's written sign-off before launch.
 
 ## Pages and where they live
 
@@ -60,14 +71,10 @@ Always view the page you changed plus one other page, to catch header/footer dri
 ## Handle with care
 - **Legal pages.** The two privacy policies are legal text. Coordinate edits with Dimagi legal.
 - **External links.** The "Sign In" button, the login redirect, the help site, and the app store badges point to live systems. Do not change these URLs without confirming the new target.
-- **Version control.** This folder is a git repository with its origin at `github.com/dimagi-internal/sureadhere-prelogin`. Commit every change there so the team has history and a safe undo, and run `git push` after committing. Confirm the repo's visibility (public vs private) in its GitHub settings before sharing it widely.
+- **Version control.** This folder is a git repository with its origin at `github.com/dimagi-internal/sureadhere-prelogin` (the staging copy). Commit every change there so the team has history and a safe undo, and run `git push` after committing. Confirm the repo's visibility (public vs private) in its GitHub settings before sharing it widely. The SureAdhere team may relocate this repo to a SureAdhere-owned org at handover.
 
 ## Deploy
 
-There is **no CI workflow in this repo**, so nothing auto-deploys on push yet. Confirm the exact mechanism and who has access before relying on it. The facts known at handover:
+This repo is staging only — see the "Status" section at the top for the full list of decisions the SureAdhere team needs to make before launch (repo home, production URL, host, cutover housekeeping). Replace this section with the confirmed steps and the list of who can publish once the deploy pipeline is wired.
 
-- **Repo:** `github.com/dimagi-internal/sureadhere-prelogin` (this folder is the working copy). Commit and push every change so the team keeps history and a safe undo.
-- **Production target:** every page's `<link rel="canonical">` and `og:url` point to `https://dimagi.com/sureadhere/`, and `sitemap.xml` / `robots.txt` use that base. So the intended home is a path under the main dimagi.com static site (the WordPress to static migration), not a standalone domain.
-- **How the files actually ship today is unconfirmed.** Most likely one of: (a) folded into the dimagi.com static deploy as part of the migration, or (b) GitHub Pages "deploy from a branch" on the repo above. There is no GitHub Actions workflow.
-
-**Action for the SureAdhere team:** confirm (a) vs (b), wire up the deploy (a Pages workflow, or the migration pipeline), then replace this section with the confirmed steps and the list of who can publish. This is the most important section to finish; it is the one thing this handover could not verify from the code.
+Today's canonical URLs in the HTML (`<link rel="canonical">`, `og:url`, JSON-LD `@id`/`url`, `sitemap.xml`) all still point to `https://dimagi.com/sureadhere/`. They are intentionally left untouched in this staging state — they should be flipped to the new host as part of the cutover, not before.
