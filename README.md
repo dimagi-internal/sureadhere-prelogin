@@ -72,6 +72,13 @@ Always view the page you changed plus one other page, to catch header/footer dri
 - Logo: `assets/images/sureadhere-logo-full-color.png` (rendered white via a CSS filter in the nav and footer).
 - App store badges: `assets/images/badge-app-store.svg`, `assets/images/badge-google-play.png`.
 
+## Layout conventions
+A few site-wide patterns set in `assets/styles.css` that are easy to undo by accident:
+- **`.section-head` is centered.** Every section heading block (eyebrow + `h2.section-title` + `.section-lede`) is center-aligned, `max-width: 760px`, with auto horizontal margins. Page heroes use `.hero-title` directly, not `.section-head`, so they stay left-aligned. Wrap any new section heading in `<div class="section-head">` and it picks up the right style automatically.
+- **Footer external links show a `↗` arrow.** A scoped rule (`footer .footer-col a[target="_blank"]::after`, `footer .footer-bottom a[target="_blank"]::after`) appends the indicator. Internal links and the app-store badge links stay clean.
+- **Green sector pills** on the home Partner Stories cards use `.sector-tag`, defined inline in `index.html` under `.partner-stories-dark`. Reuse the class on any new partner-story card to keep the pattern consistent.
+- **Hero video on the homepage autoplays muted** via the standard Wistia embed (`autoPlay=true muted=true playsinline=true`). Browsers will not autoplay with sound; the player's own unmute control is the only way for visitors to hear it.
+
 ## Handle with care
 - **Legal pages.** The two privacy policies are legal text. Coordinate edits with Dimagi legal.
 - **External links.** The "Sign In" button, the login redirect, the help site, and the app store badges point to live systems. Do not change these URLs without confirming the new target.

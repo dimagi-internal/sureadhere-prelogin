@@ -51,11 +51,13 @@
   /* ── Jump nav ── */
   .jump-nav {
     position: sticky;
-    top: 76px;
+    top: 0;
     z-index: 40;
     background: #D4F3F2;
     border-bottom: 1px solid rgba(0,144,144,0.18);
   }
+  /* Offset anchor jumps so the section heading isn't hidden under the sticky bar. */
+  #evidence, #updates, #team, #faqs { scroll-margin-top: 72px; }
   .jump-nav-inner {
     display: flex;
     gap: 0;
@@ -585,7 +587,7 @@
 <!-- ───── EVIDENCE BASE ───── -->
 <section class="section" id="evidence" style="padding:80px 0;">
   <div class="container">
-    <div style="margin-bottom:40px;">
+    <div class="section-head" style="margin-bottom:40px;">
       <span class="eyebrow">EVIDENCE BASE</span>
       <h2 class="section-title" style="margin-top:12px;">Built on <em>peer-reviewed science.</em></h2>
       <p class="section-lede">SureAdhere's clinical foundation spans 27 published studies, two randomized controlled trials, and WHO and CDC guideline recognition: more rigorous evidence than any comparable platform.</p>
@@ -628,7 +630,7 @@
 <!-- ───── PRODUCT UPDATES ───── -->
 <section class="section warm" id="updates" style="padding:80px 0;">
   <div class="container">
-    <div style="margin-bottom:40px;">
+    <div class="section-head" style="margin-bottom:40px;">
       <span class="eyebrow">PRODUCT UPDATES</span>
       <h2 class="section-title" style="margin-top:12px;">What's new in <em>SureAdhere.</em></h2>
       <p class="section-lede">Recent platform releases, new features, and bug fixes.</p>
@@ -713,17 +715,17 @@
 </section>
 
 <!-- ───── STORY &amp; TEAM ───── -->
-<section class="section warm" id="team" style="padding:80px 0;">
+<section class="section" id="team" style="padding:80px 0;">
   <div class="container">
-    <div style="margin-bottom:64px;">
+    <div class="section-head" style="margin-bottom:64px;">
       <span class="eyebrow">STORY &amp; TEAM</span>
-      <h2 class="section-title" style="margin-top:12px;">Born in a lab. <em>Built for the real world.</em></h2>
+      <h2 class="section-title" style="margin-top:12px;">Born in a lab.<br><em>Built for the real world.</em></h2>
     </div>
 
     <!-- Story -->
-    <div style="max-width:680px;margin:0 0 0;">
-      <p style="color:var(--muted);font-size:1rem;line-height:1.8;margin:0 0 24px;">Our journey began in 2009 when a group of innovative researchers at the University of California San Diego embarked on a groundbreaking mission. Collaborating closely with tuberculosis programs in California and Baja California, Mexico, they pioneered the world's first-ever video directly observed therapy intervention.</p>
-      <p style="color:var(--muted);font-size:1rem;line-height:1.8;margin:0 0 32px;">Today, SureAdhere is a Dimagi platform, operating in 18 countries and trusted by over 350 programs. The original commitment to rigorous evidence and patient-centered care hasn't changed.</p>
+    <div style="max-width:680px;margin:0 auto;text-align:center;">
+      <p style="color:var(--muted);font-size:1rem;line-height:1.8;margin:0 0 24px;">In 2009, researchers at UC San Diego, working with tuberculosis programs in California and Baja California, Mexico, pioneered the first video directly observed therapy intervention.</p>
+      <p style="color:var(--muted);font-size:1rem;line-height:1.8;margin:0 0 32px;">Today, SureAdhere is a Dimagi platform in 18 countries, trusted by 350+ programs. The commitment to rigorous evidence and patient-centered care is the same.</p>
       <a class="btn btn-ghost btn-arrow" href="https://dimagi.com/sureadheres-story/" target="_blank" rel="noopener">Read the full story</a>
     </div>
 
@@ -781,7 +783,7 @@
 <!-- ───── FAQs ───── -->
 <section class="section" id="faqs" style="padding:80px 0;">
   <div class="container">
-    <div style="margin-bottom:48px;max-width:680px;">
+    <div class="section-head" style="margin-bottom:48px;">
       <span class="eyebrow">FAQS</span>
       <h2 class="section-title" style="margin-top:12px;">Common <em>questions answered.</em></h2>
       <p class="section-lede">Can't find what you need? Visit the <a href="https://dimagi.atlassian.net/wiki/spaces/sa/overview" target="_blank" rel="noopener" style="color:var(--indigo);">full help site</a> or <a href="../contact/" style="color:var(--indigo);">contact our team</a>.</p>

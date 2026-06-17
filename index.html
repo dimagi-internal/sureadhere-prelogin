@@ -458,6 +458,22 @@
     margin-top: 28px;
   }
   .partner-stories-dark .story-link::after { content: "→"; transition: transform 150ms ease; }
+  /* Green sector pill on the three partner-story cards (home). */
+  .partner-stories-dark .sector-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6EE7B7;
+    background: rgba(16, 185, 129, 0.16);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 999px;
+    padding: 5px 12px 4px;
+    margin-bottom: 14px;
+    line-height: 1;
+  }
   .partner-stories-dark .story-link:hover { color: #A5DFDB; }
   .partner-stories-dark .story-link:hover::after { transform: translateX(3px); }
 </style>
@@ -743,6 +759,7 @@
     <!-- Featured: Gates MRI & PAN-TB Consortium -->
     <div class="story-featured">
       <div class="story-featured-copy">
+        <span class="sector-tag">Clinical Trials</span>
         <div class="story-label">PARTNER STORY &nbsp;·&nbsp; OCTOBER 2024</div>
         <h3 style="color:#fff;">Gates MRI &amp; PAN-TB Consortium: <em>Phase 2b/c TB treatment-shortening trial.</em></h3>
         <p>Gates MRI selected SureAdhere as the central adherence platform for the PAN-TB TBDO6 study, evaluating two novel regimens across 11 sites in South Africa and the Philippines. Exceptionally high adherence allowed early go/no-go decisions without adherence as a confounding factor.</p>
@@ -772,7 +789,8 @@
     <!-- Secondary: Public Health + Behavioral Health -->
     <div class="story-secondary-grid">
       <a class="story-card" href="public-health/index.html">
-        <div class="story-card-tag">PUBLIC HEALTH &nbsp;·&nbsp; OCT 2018</div>
+        <span class="sector-tag">Public Health</span>
+        <div class="story-card-tag">OCT 2018</div>
         <h4>5 California health districts cut TB treatment costs by a third</h4>
         <p>San Francisco DPH and four other county departments adopted video DOT to monitor TB treatment, reaching higher adherence than in-person DOT at a fraction of the cost.</p>
         <div class="story-card-stats">
@@ -787,7 +805,8 @@
         </div>
       </a>
       <a class="story-card" href="behavioral-health/index.html">
-        <div class="story-card-tag">BEHAVIORAL HEALTH &nbsp;·&nbsp; 2022</div>
+        <span class="sector-tag">Behavioral Health</span>
+        <div class="story-card-tag">2022</div>
         <h4>Vermont's virtual MAT program nearly doubled retention</h4>
         <p>The Howard Center paired a secure medication dispenser with SureAdhere's VDOT, transforming one-year retention for patients accessing Medication-Assisted Treatment.</p>
         <div class="story-card-stats">
