@@ -322,6 +322,16 @@ a:focus-visible {
   outline-offset: 2px;
   border-radius: 2px;
 }
+/* Accessibility: extend the same focus ring to every keyboard-reachable interactive.
+   :where() keeps specificity 0 so element-specific rules above still win. */
+:where(button, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--indigo);
+  outline-offset: 2px;
+}
+:where(.on-dark, .hero-dark, .cta-band, .section.dark) :where(a, button, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible,
+footer :where(a, button, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline-color: #fff;
+}
 
 /* ---- HERO ---- */
 .hero {
