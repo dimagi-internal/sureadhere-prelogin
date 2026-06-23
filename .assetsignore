@@ -1,0 +1,8 @@
+# Files in the repo root that should not be served as part of the site.
+CLAUDE.md
+ONBOARDING.md
+README.md
+.claude
+.gitignore
+.assetsignore
+wrangler.jsonc
