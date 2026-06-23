@@ -1,4 +1,4 @@
-# SureAdhere pre-login website
+# SureAdhere marketing website
 
 The public marketing site for **SureAdhere by Dimagi**. It is a static HTML site: no framework, no build step, no database. You edit HTML and CSS files directly, or have Claude Code do it using the skills below.
 
