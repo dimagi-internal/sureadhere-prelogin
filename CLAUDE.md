@@ -5,6 +5,17 @@ This folder is the **SureAdhere by Dimagi** marketing site: a hand-built static 
 ## Who runs this (important)
 This site is maintained by **non-developers**. Every routine workflow (editing content, previewing changes, and publishing) must be doable **entirely in a web browser, with no command line**. When proposing or documenting a process, always give the browser-based path first (GitHub web UI for edits/PRs/merges, the Cloudflare dashboard for builds and previews), and treat CLI steps as optional notes for engineers only. The end goal is a written, step-by-step runbook a non-technical teammate can follow.
 
+## Standard workflow for changes (Claude-driven, GitHub-free for the user)
+This repo's maintainers are non-developers and should **not** be asked to use github.com. For any content or site change, Claude handles all of GitHub on the user's behalf. This section is standing authorization to create and merge pull requests as the normal flow for this repo (it overrides the usual "don't open a PR unless asked" default). The steps:
+
+1. **Edit on a branch.** Make the change on a new branch (never commit directly to `main`), commit with a clear message, and push.
+2. **Open the PR** for the user (base `main`). Do not ask them to open it.
+3. **Surface a preview.** Production deploys come from Cloudflare Workers Builds, which posts a `*.workers.dev` **preview URL** as a check/comment on each PR (it appears ~1 minute after the push). Wait for it, then give the user that preview link as a clickable link. You can `subscribe_pr_activity` so you are notified when the build's preview is ready instead of polling.
+4. **Offer a merge button.** Present the publish decision as selectable options (the question tool renders real buttons), e.g. "Publish this change?" with `Merge now` / `Not yet`. Do not make the user click anything on GitHub.
+5. **Merge on approval.** When the user approves, merge the PR yourself (`merge_pull_request`). Then confirm it is live and remind them a hard refresh (Cmd+Shift+R / Ctrl+Shift+R) may be needed because CSS and images are cached.
+
+Keep GitHub as the engine under the hood (source of truth + deploy trigger); just never make the user touch it. The human-facing version of this is in `RUNBOOK.md`.
+
 ## How the site is built
 - 10 pages, each a complete standalone HTML file. There is **no templating**: the `<head>`, the top nav, and the footer are copied inline into every page.
 - One shared stylesheet: `assets/styles.css`. Page-specific CSS lives in a `<style>` block in that page's `<head>`.
