@@ -3,7 +3,7 @@
   // No Worker script: this serves the repo's static HTML/CSS/images directly.
   // NOTE: "name" must match the Cloudflare Worker that `wrangler versions
   // upload` targets. Change it if your Worker is named differently.
-  "name": "sureadhere-marketing",
+  "name": "marketing",
   "compatibility_date": "2026-06-23",
   "assets": {
     "directory": "./",
